@@ -13,7 +13,3 @@ A chatbot boyo for my twitch channel @ https://twitch.tv/dubbyyt
 To build Dubbo:
 ``Linux: sudo npm install && sudo cp .env-example .env && sudo nano .env``
 ``Windows: npm install && copy .env-example .env && code .env`` - VSC required
-
-git remote add origin https://github.com/MilesSRC/DubboBot.git
-git branch -M master
-git push -u origin master
