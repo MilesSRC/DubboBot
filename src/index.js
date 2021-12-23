@@ -31,12 +31,14 @@ client.connect().catch(console.error);
 
 // Message Handler
 client.on('message', (channel, tags, message, self) => {
-    if(self) return;
+    try {
+        if(self) return;
 
-    const command = message.split("!")[1].split(" ")[0].toLowerCase();
-    const args = message.split(" ").slice(1);
+        if(!message.startsWith("!")) return;
 
-    if(message.startsWith("!")){
+        const command = message.split("!")[1].split(" ")[0].toLowerCase();
+        const args = message.split(" ").slice(1);
+
         switch(command){
             case "help":
                 client.say(channel, `Ayo! What's up, its yo boy Dubbo.
@@ -94,6 +96,9 @@ client.on('message', (channel, tags, message, self) => {
             default:
                 client.say(channel, `That command doesn't exist. :(`);
         }
+    } catch (err) {
+        console.log("Prevented crash.");
+        console.error(err);
     }
 });
 
