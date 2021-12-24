@@ -1,3 +1,5 @@
+const discord = require('discord.js');
+
 module.exports = (member) => {
     const client = global.client;
     member.roles.add('923904624967188480');
