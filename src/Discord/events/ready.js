@@ -24,10 +24,8 @@ module.exports = () => {
             if(wasLive == false){
                 wasLive = true;
                 const channel = await client.channels.fetch('923925977602592778');
-                const messages = await channel.messages.fetch({ limit: 1 });
-                if((Date.now() - messages.first().createdAt) > 1000 * 60 * 30){
-                    channel.send(`@everyone Dubby is live! https://twitch.tv/${process.env.CHANNEL}`);
-                }
+                channel.send(`@everyone Dubby is live! https://twitch.tv/${process.env.CHANNEL}
+                Streaming: **${title}**`);
             }
         } else {
             client.user.setActivity({
