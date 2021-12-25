@@ -2,7 +2,7 @@ module.exports = () => {
     const client = global.client;
     let seq = 0;
     let wasLive = false;
-    require('../util/TwitchWatcher').watch(async (live, viewers, title) => {
+    require('../util/TwitchWatcher').watch(async (live, viewers, title, game) => {
         // Do change
         if(live){
             if(seq == 0){
@@ -12,11 +12,18 @@ module.exports = () => {
                     name: title,
                     url: "https://twitch.tv/dubbyyt"
                 });
+            } else if(seq == 1) {
+                seq = 2;
+                client.user.setActivity({
+                    type: "STREAMING",
+                    name: `${viewers} viewers on Dubby's Twitch`,
+                    url: "https://twitch.tv/dubbyyt"
+                });
             } else {
                 seq = 0;
                 client.user.setActivity({
                     type: "STREAMING",
-                    name: `${viewers} viewers on Dubby's Twitch`,
+                    name: `${game} on Twitch`,
                     url: "https://twitch.tv/dubbyyt"
                 });
             }
@@ -24,10 +31,14 @@ module.exports = () => {
             if(wasLive == false){
                 wasLive = true;
                 const channel = await client.channels.fetch('923925977602592778');
-                channel.send(`@everyone Dubby is live! https://twitch.tv/${process.env.CHANNEL}
-                Streaming: **${title}**`);
+                const messages = await channel.messages.fetch({ limit: 1 });
+                if((Date.now() - messages.first().createdAt) > 1000 * 60 * 30){
+                    channel.send(`@everyone Dubby is streaming ${game}
+                    ${title} @ https://twitch.tv/${process.env.CHANNEL}`);
+                }
             }
         } else {
+            wasLive = false;
             client.user.setActivity({
                 type: "PLAYING",
                 name: "VALORANT"

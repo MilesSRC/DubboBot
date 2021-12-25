@@ -22,11 +22,11 @@ exports.watch = (changecb) => {
             } else {
                 if(lastOnline == false){
                     lastOnline = true;
-                    changecb(true, lastViewerCount, returned.title);
+                    changecb(true, lastViewerCount, returned.title, returned.game_name);
                 } else {
                     if(lastViewerCount != returned.viewer_count){
                         lastViewerCount = returned.viewer_count;
-                        changecb(true, lastViewerCount, returned.title);
+                        changecb(true, lastViewerCount, returned.title, returned.game_name);
                     }
                 }
             }
